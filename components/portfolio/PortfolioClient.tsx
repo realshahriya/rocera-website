@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import { Search, ExternalLink, GitBranch, X } from 'lucide-react'
+import { Search, ExternalLink, GitBranch, X, Star } from 'lucide-react'
 import type { Project } from '@/types/portfolio'
 
 const statusColors = {
@@ -15,63 +15,63 @@ function ProjectCard({ project }: { project: Project }) {
   const status = statusColors[project.status]
   return (
     <article
-      className="group rounded-xl overflow-hidden flex flex-col transition-all duration-300"
+      className="group rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1"
       style={{
         background: 'var(--color-rocera-surface)',
         border: '1px solid var(--color-rocera-border)',
       }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.border = '1px solid var(--color-rocera-border-2)'
-        el.style.transform = 'translateY(-4px)'
-        el.style.boxShadow = '0 16px 40px rgba(0,0,0,0.3)'
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.border = '1px solid var(--color-rocera-border)'
-        el.style.transform = 'translateY(0)'
-        el.style.boxShadow = 'none'
-      }}
     >
       <div
-        className="h-36 relative flex items-center justify-center"
+        className="h-36 sm:h-40 relative flex items-center justify-center p-4"
         style={{
           background: 'linear-gradient(135deg, var(--color-rocera-surface-2) 0%, var(--color-rocera-bg) 100%)',
         }}
       >
         <div className="absolute inset-0 grid-pattern opacity-20" />
-        <span className="text-4xl font-bold text-gradient opacity-25">
+
+        {/* GitHub Stars pill badge */}
+        {project.stargazersCount !== undefined && (
+          <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-black/40 backdrop-blur border border-white/10 text-amber-400">
+            <Star size={11} className="fill-amber-400" />
+            <span>{project.stargazersCount}</span>
+          </div>
+        )}
+
+        <span className="text-4xl font-extrabold text-gradient opacity-25 group-hover:opacity-50 transition-opacity">
           {project.title.slice(0, 2).toUpperCase()}
         </span>
       </div>
+
       <div className="p-5 flex flex-col gap-3 flex-1">
         <div className="flex items-center justify-between">
           <span
-            className="px-2 py-0.5 rounded-full text-xs font-medium"
+            className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium"
             style={{ background: status.bg, color: status.text }}
           >
             {status.label}
           </span>
-          <span className="text-xs" style={{ color: 'var(--color-rocera-muted)' }}>
+          <span className="text-xs font-mono" style={{ color: 'var(--color-rocera-muted)' }}>
             {new Date(project.date).getFullYear()}
           </span>
         </div>
+
         <div>
           <h2
-            className="text-base font-semibold mb-1.5"
+            className="text-base sm:text-lg font-bold mb-1.5 group-hover:text-amber-300 transition-colors"
             style={{ color: 'var(--color-rocera-text)' }}
           >
             {project.title}
           </h2>
-          <p className="text-xs leading-relaxed line-clamp-2" style={{ color: 'var(--color-rocera-muted)' }}>
+          <p className="text-xs sm:text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--color-rocera-muted)' }}>
             {project.description}
           </p>
         </div>
-        <div className="flex flex-wrap gap-1 mt-auto">
+
+        <div className="flex flex-wrap gap-1.5 mt-auto">
           {project.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 rounded text-xs"
+              className="px-2 py-0.5 rounded text-[11px] font-mono"
               style={{ background: 'var(--color-rocera-surface-2)', color: 'var(--color-rocera-muted-2)' }}
             >
               {tag}
@@ -79,34 +79,31 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
           {project.tags.length > 4 && (
             <span
-              className="px-2 py-0.5 rounded text-xs"
+              className="px-2 py-0.5 rounded text-[11px] font-mono"
               style={{ background: 'var(--color-rocera-surface-2)', color: 'var(--color-rocera-muted)' }}
             >
               +{project.tags.length - 4}
             </span>
           )}
         </div>
+
         <div
-          className="flex items-center gap-3 pt-2"
+          className="flex items-center gap-3 pt-3"
           style={{ borderTop: '1px solid var(--color-rocera-border)' }}
         >
           <Link
             href={`/portfolio/${project.slug}`}
-            className="flex-1 text-center py-1.5 rounded-md text-xs font-medium"
-            style={{
-              background: 'color-mix(in srgb, var(--color-rocera-accent) 10%, transparent)',
-              color: 'var(--color-rocera-accent)',
-            }}
+            className="btn-butter-secondary flex-1 text-center text-xs !py-2"
           >
-            Read more
+            Read Case Study
           </Link>
           {project.demo && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label="Demo">
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label="Demo" className="p-2 rounded-lg border border-white/10 hover:bg-white/5">
               <ExternalLink size={14} style={{ color: 'var(--color-rocera-muted)' }} />
             </a>
           )}
           {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" className="p-2 rounded-lg border border-white/10 hover:bg-white/5">
               <GitBranch size={14} style={{ color: 'var(--color-rocera-muted)' }} />
             </a>
           )}
@@ -139,7 +136,7 @@ export function PortfolioClient({ projects, tags }: { projects: Project[]; tags:
       <div className="flex flex-col gap-4 mb-10">
         {/* Search */}
         <div
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg max-w-sm"
+          className="flex items-center gap-2 px-4 py-3 rounded-xl w-full sm:max-w-md"
           style={{
             background: 'var(--color-rocera-surface)',
             border: '1px solid var(--color-rocera-border)',
@@ -149,7 +146,7 @@ export function PortfolioClient({ projects, tags }: { projects: Project[]; tags:
           <input
             id="portfolio-search"
             type="text"
-            placeholder="Search projects..."
+            placeholder="Search projects by name or technology..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="bg-transparent outline-none text-sm w-full"
@@ -169,7 +166,7 @@ export function PortfolioClient({ projects, tags }: { projects: Project[]; tags:
               key={status}
               id={`filter-status-${status}`}
               onClick={() => setActiveStatus(activeStatus === status ? null : status)}
-              className="px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 capitalize"
+              className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 capitalize"
               style={{
                 background:
                   activeStatus === status
@@ -188,13 +185,13 @@ export function PortfolioClient({ projects, tags }: { projects: Project[]; tags:
         </div>
 
         {/* Tag filter */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {tags.slice(0, 16).map((tag) => (
             <button
               key={tag}
               id={`filter-tag-${tag.toLowerCase().replace(/\s+/g, '-')}`}
               onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-              className="px-3 py-1 rounded-full text-xs font-medium transition-all duration-200"
+              className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono font-medium transition-all duration-200"
               style={{
                 background:
                   activeTag === tag
@@ -217,7 +214,7 @@ export function PortfolioClient({ projects, tags }: { projects: Project[]; tags:
       </div>
 
       {/* Count */}
-      <p className="text-sm mb-6" style={{ color: 'var(--color-rocera-muted)' }}>
+      <p className="text-xs sm:text-sm mb-6" style={{ color: 'var(--color-rocera-muted)' }}>
         Showing {filtered.length} of {projects.length} projects
       </p>
 
@@ -229,12 +226,12 @@ export function PortfolioClient({ projects, tags }: { projects: Project[]; tags:
           ))}
         </div>
       ) : (
-        <div className="text-center py-20">
-          <p className="text-lg" style={{ color: 'var(--color-rocera-muted)' }}>
-            No projects match your filters.
+        <div className="text-center py-16 sm:py-20 rounded-2xl border border-white/10" style={{ background: 'var(--color-rocera-surface)' }}>
+          <p className="text-base sm:text-lg" style={{ color: 'var(--color-rocera-muted)' }}>
+            No projects match your search or filters.
           </p>
           <button
-            className="mt-4 text-sm underline"
+            className="mt-4 text-xs sm:text-sm underline font-semibold"
             style={{ color: 'var(--color-rocera-accent)' }}
             onClick={() => { setSearch(''); setActiveTag(null); setActiveStatus(null) }}
           >

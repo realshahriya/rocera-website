@@ -41,35 +41,35 @@ export default async function ProjectDetailPage({
   const status = statusColors[project.status]
 
   return (
-    <div className="min-h-screen pt-24 pb-20" style={{ background: 'var(--color-rocera-bg)' }}>
+    <div className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6" style={{ background: 'var(--color-rocera-bg)' }}>
       <div className="container-rocera">
-        {/* Back */}
+        {/* Back Button */}
         <Link
           href="/portfolio"
-          className="inline-flex items-center gap-2 text-sm mb-10 transition-colors duration-200"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm mb-8 transition-colors duration-200"
           style={{ color: 'var(--color-rocera-muted)' }}
         >
           <ArrowLeft size={16} />
           Back to Portfolio
         </Link>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main content */}
           <div className="lg:col-span-2">
             {/* Title */}
             <h1
-              className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
               style={{ color: 'var(--color-rocera-text)' }}
             >
               {project.title}
             </h1>
-            <p className="text-lg mb-8" style={{ color: 'var(--color-rocera-muted-2)' }}>
+            <p className="text-base sm:text-lg mb-8 leading-relaxed" style={{ color: 'var(--color-rocera-muted-2)' }}>
               {project.description}
             </p>
 
-            {/* Content */}
+            {/* Markdown Case Study Body */}
             <div
-              className="prose-rocera"
+              className="prose-rocera max-w-full overflow-hidden"
               dangerouslySetInnerHTML={{ __html: project.content ?? '' }}
             />
           </div>
@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({
           <aside className="flex flex-col gap-6">
             {/* Status */}
             <div
-              className="p-5 rounded-xl"
+              className="p-6 rounded-2xl"
               style={{
                 background: 'var(--color-rocera-surface)',
                 border: '1px solid var(--color-rocera-border)',
@@ -93,13 +93,13 @@ export default async function ProjectDetailPage({
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-2">
                   <span
-                    className="px-2 py-0.5 rounded-full text-xs font-medium"
+                    className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium"
                     style={{ background: status.bg, color: status.text }}
                   >
                     {status.label}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-rocera-muted)' }}>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-mono" style={{ color: 'var(--color-rocera-muted)' }}>
                   <Calendar size={14} />
                   {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
                 </div>
@@ -109,7 +109,7 @@ export default async function ProjectDetailPage({
             {/* Links */}
             {(project.demo || project.github) && (
               <div
-                className="p-5 rounded-xl flex flex-col gap-3"
+                className="p-6 rounded-2xl flex flex-col gap-3"
                 style={{
                   background: 'var(--color-rocera-surface)',
                   border: '1px solid var(--color-rocera-border)',
@@ -126,7 +126,7 @@ export default async function ProjectDetailPage({
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm transition-colors duration-200"
+                    className="flex items-center gap-2 text-sm font-medium transition-colors duration-200"
                     style={{ color: 'var(--color-rocera-accent)' }}
                   >
                     <ExternalLink size={14} />
@@ -138,7 +138,7 @@ export default async function ProjectDetailPage({
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm transition-colors duration-200"
+                    className="flex items-center gap-2 text-sm font-medium transition-colors duration-200"
                     style={{ color: 'var(--color-rocera-muted-2)' }}
                   >
                     <GitBranch size={14} />
@@ -150,7 +150,7 @@ export default async function ProjectDetailPage({
 
             {/* Tags */}
             <div
-              className="p-5 rounded-xl"
+              className="p-6 rounded-2xl"
               style={{
                 background: 'var(--color-rocera-surface)',
                 border: '1px solid var(--color-rocera-border)',
@@ -166,7 +166,7 @@ export default async function ProjectDetailPage({
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="flex items-center gap-1 px-2 py-1 rounded text-xs"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono"
                     style={{
                       background: 'var(--color-rocera-surface-2)',
                       color: 'var(--color-rocera-muted-2)',

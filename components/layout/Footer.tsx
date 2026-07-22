@@ -38,10 +38,10 @@ export function Footer() {
         borderTop: '1px solid var(--color-rocera-border)',
       }}
     >
-      <div className="container-rocera py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+      <div className="container-rocera py-12 sm:py-16 px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-12">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
               <RoceraLogo className="w-8 h-8" />
               <span
@@ -52,13 +52,13 @@ export function Footer() {
               </span>
             </Link>
             <p
-              className="text-sm leading-relaxed mb-6 max-w-xs"
+              className="text-xs sm:text-sm leading-relaxed mb-4 max-w-xs"
               style={{ color: 'var(--color-rocera-muted)' }}
             >
               Premium technology agency. We build exceptional software that lasts.
             </p>
             <p
-              className="text-xs font-mono tracking-widest uppercase"
+              className="text-[11px] font-mono tracking-widest uppercase"
               style={{ color: 'var(--color-rocera-gold)' }}
             >
               Secure. Own. Advance.
@@ -73,7 +73,7 @@ export function Footer() {
                   target={href.startsWith('http') ? '_blank' : undefined}
                   rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   aria-label={label}
-                  className="p-2 rounded-md transition-all duration-200"
+                  className="p-2.5 rounded-xl border border-white/10 transition-all duration-200"
                   style={{ color: 'var(--color-rocera-muted)' }}
                   onMouseEnter={(e) => {
                     ;(e.currentTarget as HTMLElement).style.color =
@@ -102,12 +102,12 @@ export function Footer() {
               >
                 {category}
               </h3>
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm transition-colors duration-200"
+                      className="text-xs sm:text-sm transition-colors duration-200"
                       style={{ color: 'var(--color-rocera-muted)' }}
                       onMouseEnter={(e) =>
                         ((e.currentTarget as HTMLElement).style.color =
@@ -129,7 +129,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col md:flex-row items-center justify-between gap-4 mt-12 pt-8"
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 pt-8 text-center sm:text-left"
           style={{ borderTop: '1px solid var(--color-rocera-border)' }}
         >
           <p className="text-xs" style={{ color: 'var(--color-rocera-muted)' }}>

@@ -10,10 +10,10 @@ export function HackathonsPreview() {
   return (
     <section
       id="hackathons-preview"
-      className="section-padding"
+      className="section-padding relative overflow-hidden"
       style={{ background: 'var(--color-rocera-surface)' }}
     >
-      <div className="container-rocera">
+      <div className="container-rocera relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
             <p
@@ -106,6 +106,14 @@ export function HackathonsPreview() {
           ))}
         </div>
       </div>
+
+      {/* Bottom Fade Gradient into Next Section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, var(--color-rocera-bg) 100%)',
+        }}
+      />
     </section>
   )
 }

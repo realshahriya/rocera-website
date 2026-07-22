@@ -9,6 +9,8 @@ export interface Project {
   github?: string
   date: string
   featured: boolean
+  stargazersCount?: number
+  forksCount?: number
   content?: string
 }
 
@@ -22,4 +24,6 @@ export interface ProjectFrontmatter {
   github?: string
   date: string
   featured: boolean
+  stargazersCount?: number
+  forksCount?: number
 }

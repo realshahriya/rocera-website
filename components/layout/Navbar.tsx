@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowRight } from 'lucide-react'
 import { RoceraLogo } from '@/components/ui/RoceraLogo'
 
 const navLinks = [
@@ -29,17 +29,28 @@ export function Navbar() {
 
   useEffect(() => {
     setIsOpen(false)
+    document.body.style.overflow = ''
   }, [pathname])
+
+  const toggleMobileMenu = () => {
+    const nextState = !isOpen
+    setIsOpen(nextState)
+    if (nextState) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  }
 
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled
-          ? 'color-mix(in srgb, var(--color-rocera-bg) 90%, transparent)'
+        background: scrolled || isOpen
+          ? 'color-mix(in srgb, var(--color-rocera-bg) 95%, transparent)'
           : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--color-rocera-border)' : 'none',
+        backdropFilter: scrolled || isOpen ? 'blur(16px)' : 'none',
+        borderBottom: scrolled || isOpen ? '1px solid var(--color-rocera-border)' : 'none',
       }}
     >
       <nav className="container-rocera flex items-center justify-between h-16">
@@ -62,7 +73,7 @@ export function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200"
+                  className="px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-200"
                   style={{
                     color: isActive
                       ? 'var(--color-rocera-text)'
@@ -70,16 +81,6 @@ export function Navbar() {
                     background: isActive
                       ? 'var(--color-rocera-surface-2)'
                       : 'transparent',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive)
-                      (e.currentTarget as HTMLElement).style.color =
-                        'var(--color-rocera-muted-2)'
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive)
-                      (e.currentTarget as HTMLElement).style.color =
-                        'var(--color-rocera-muted)'
                   }}
                 >
                   {link.label}
@@ -89,85 +90,74 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* CTA */}
+        {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
           <Link
             href="/contact"
             id="nav-start-project"
-            className="px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200"
-            style={{
-              background: 'var(--color-rocera-accent)',
-              color: '#fff',
-            }}
-            onMouseEnter={(e) =>
-              ((e.currentTarget as HTMLElement).style.background =
-                'var(--color-rocera-accent-hover)')
-            }
-            onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLElement).style.background =
-                'var(--color-rocera-accent)')
-            }
+            className="btn-butter !py-2 !px-5 text-sm"
           >
             Start a Project
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile Hamburger Button */}
         <button
           id="nav-mobile-toggle"
-          className="md:hidden p-2 rounded-md transition-colors duration-200"
-          style={{ color: 'var(--color-rocera-muted)' }}
-          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2 rounded-xl transition-colors duration-200 border border-white/10"
+          style={{ background: 'var(--color-rocera-surface)', color: 'var(--color-rocera-text)' }}
+          onClick={toggleMobileMenu}
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile Drawer Navigation Overlay */}
       <div
-        className="md:hidden overflow-hidden transition-all duration-300"
+        className="md:hidden fixed top-16 left-0 right-0 bottom-0 z-40 transition-all duration-300 flex flex-col justify-between p-6"
         style={{
-          maxHeight: isOpen ? '400px' : '0',
-          background: 'var(--color-rocera-surface)',
-          borderBottom: isOpen ? '1px solid var(--color-rocera-border)' : 'none',
+          background: 'var(--color-rocera-bg)',
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? 'auto' : 'none',
+          transform: isOpen ? 'translateY(0)' : 'translateY(-10px)',
+          minHeight: 'calc(100vh - 4rem)',
         }}
       >
-        <ul className="container-rocera py-4 flex flex-col gap-1">
+        <ul className="flex flex-col gap-2">
           {navLinks.map((link) => {
             const isActive = pathname === link.href
             return (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  className="flex items-center justify-between px-4 py-3.5 rounded-xl text-base font-semibold transition-colors duration-200 border border-transparent"
                   style={{
                     color: isActive
                       ? 'var(--color-rocera-text)'
-                      : 'var(--color-rocera-muted)',
+                      : 'var(--color-rocera-muted-2)',
                     background: isActive
                       ? 'var(--color-rocera-surface-2)'
-                      : 'transparent',
+                      : 'var(--color-rocera-surface)',
+                    borderColor: isActive ? 'var(--color-rocera-border-2)' : 'var(--color-rocera-border)',
                   }}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  <ArrowRight size={16} className="opacity-50" />
                 </Link>
               </li>
             )
           })}
-          <li className="mt-2">
-            <Link
-              href="/contact"
-              className="block text-center px-4 py-2 rounded-md text-sm font-medium"
-              style={{
-                background: 'var(--color-rocera-accent)',
-                color: '#fff',
-              }}
-            >
-              Start a Project
-            </Link>
-          </li>
         </ul>
+
+        <div className="pt-6 border-t border-white/10">
+          <Link
+            href="/contact"
+            className="btn-butter w-full !py-3.5 text-center text-sm"
+          >
+            Start a Project
+          </Link>
+        </div>
       </div>
     </header>
   )
