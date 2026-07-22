@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-rocera-bg: #0a0b0f;
+  --color-rocera-surface: #111318;
+  --color-rocera-surface-2: #1a1d26;
+  --color-rocera-border: #1f2333;
+  --color-rocera-border-2: #2a2f45;
+
+  /* Text */
+  --color-rocera-text: #e8eaf0;
+  --color-rocera-muted: #6b7280;
+  --color-rocera-muted-2: #9ca3af;
+
+  /* Accent — Indigo/Gold */
+  --color-rocera-accent: #6366f1;
+  --color-rocera-accent-hover: #818cf8;
+  --color-rocera-gold: #c9a84c;
+  --color-rocera-gold-muted: #a8894030;
+
+  /* Status */
+  --color-rocera-success: #10b981;
+  --color-rocera-warning: #f59e0b;
+
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    border-color: var(--color-rocera-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-rocera-bg);
+    color: var(--color-rocera-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-rocera-accent) 30%, transparent);
+    color: var(--color-rocera-text);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-rocera-bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-rocera-border-2);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-rocera-accent);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer utilities {
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-rocera-text) 0%, var(--color-rocera-muted-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, var(--color-rocera-accent) 0%, var(--color-rocera-accent-hover) 60%, var(--color-rocera-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass effect */
+  .glass {
+    background: color-mix(in srgb, var(--color-rocera-surface) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-rocera-border);
+  }
+
+  .glass-subtle {
+    background: color-mix(in srgb, var(--color-rocera-surface-2) 60%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid color-mix(in srgb, var(--color-rocera-border) 50%, transparent);
+  }
+
+  /* Glow effects */
+  .glow-accent {
+    box-shadow: 0 0 30px color-mix(in srgb, var(--color-rocera-accent) 20%, transparent);
+  }
+
+  .glow-accent-sm {
+    box-shadow: 0 0 15px color-mix(in srgb, var(--color-rocera-accent) 15%, transparent);
+  }
+
+  /* Grid pattern background */
+  .grid-pattern {
+    background-image:
+      linear-gradient(var(--color-rocera-border) 1px, transparent 1px),
+      linear-gradient(to right, var(--color-rocera-border) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Section padding */
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+
+  /* Container */
+  .container-rocera {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-rocera {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  /* Prose styles for markdown */
+  .prose-rocera {
+    color: var(--color-rocera-muted-2);
+    max-width: 72ch;
+  }
+
+  .prose-rocera h1,
+  .prose-rocera h2,
+  .prose-rocera h3,
+  .prose-rocera h4 {
+    color: var(--color-rocera-text);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-rocera p {
+    margin-bottom: 1rem;
+  }
+
+  .prose-rocera ul,
+  .prose-rocera ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose-rocera li {
+    margin-bottom: 0.25rem;
+  }
+
+  .prose-rocera code {
+    background: var(--color-rocera-surface-2);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    color: var(--color-rocera-accent-hover);
+  }
+
+  .prose-rocera strong {
+    color: var(--color-rocera-text);
+    font-weight: 600;
+  }
+
+  .prose-rocera a {
+    color: var(--color-rocera-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose-rocera hr {
+    border-color: var(--color-rocera-border);
+    margin: 2rem 0;
+  }
+
+  /* Animate utilities */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.6s ease-out both;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out both;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-rocera-surface) 0%,
+      var(--color-rocera-surface-2) 50%,
+      var(--color-rocera-surface) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "id": "member-1",
+    "name": "Alex Mercer",
+    "role": "Founder & Lead Engineer",
+    "photo": "/team/alex-mercer.jpg",
+    "bio": "Full-stack engineer with 8+ years building scalable systems for startups and enterprises. Passionate about clean architecture and developer experience.",
+    "github": "https://github.com/alexmercer",
+    "linkedin": "https://linkedin.com/in/alexmercer",
+    "x": "https://x.com/alexmercer",
+    "email": "alex@rocera.dev"
+  },
+  {
+    "id": "member-2",
+    "name": "Priya Sharma",
+    "role": "AI & ML Engineer",
+    "photo": "/team/priya-sharma.jpg",
+    "bio": "Machine learning researcher turned engineer. Specializes in LLM integration, computer vision pipelines, and production AI systems.",
+    "github": "https://github.com/priyasharma",
+    "linkedin": "https://linkedin.com/in/priyasharma",
+    "x": "https://x.com/priyasharma"
+  },
+  {
+    "id": "member-3",
+    "name": "Jordan Kim",
+    "role": "Blockchain & Web3 Engineer",
+    "photo": "/team/jordan-kim.jpg",
+    "bio": "Smart contract auditor and DeFi protocol architect. Has deployed over $50M in TVL across Ethereum, Solana, and Polygon.",
+    "github": "https://github.com/jordankim",
+    "linkedin": "https://linkedin.com/in/jordankim"
+  },
+  {
+    "id": "member-4",
+    "name": "Sofia Reyes",
+    "role": "UI/UX Designer & Frontend Engineer",
+    "photo": "/team/sofia-reyes.jpg",
+    "bio": "Design systems architect with an eye for premium aesthetics. Bridges the gap between beautiful interfaces and performant code.",
+    "github": "https://github.com/sofiareyes",
+    "linkedin": "https://linkedin.com/in/sofiareyes",
+    "x": "https://x.com/sofiareyes",
+    "email": "sofia@rocera.dev"
+  }
+]

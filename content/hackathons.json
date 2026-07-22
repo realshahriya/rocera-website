@@ -1,0 +1,82 @@
+[
+  {
+    "id": "hackathon-1",
+    "name": "ETHGlobal Istanbul 2024",
+    "date": "2024-11-15",
+    "location": "Istanbul, Turkey",
+    "description": "Built a decentralized identity verification protocol using zero-knowledge proofs, enabling privacy-preserving credential verification on Ethereum L2.",
+    "result": "🏆 1st Place — Best Use of ZK Technology",
+    "awards": [
+      {
+        "place": "1st",
+        "category": "Best ZK Application",
+        "prize": "$10,000 USDC"
+      },
+      {
+        "place": "Finalist",
+        "category": "Best Overall DApp",
+        "prize": ""
+      }
+    ],
+    "techStack": [
+      { "name": "Solidity" },
+      { "name": "Next.js" },
+      { "name": "Circom" },
+      { "name": "snarkjs" },
+      { "name": "Polygon zkEVM" }
+    ],
+    "gallery": [],
+    "teamSize": 4,
+    "url": "https://ethglobal.com"
+  },
+  {
+    "id": "hackathon-2",
+    "name": "Encode x Solana Hackathon",
+    "date": "2024-06-20",
+    "location": "London, UK",
+    "description": "Developed a high-frequency automated market maker (AMM) on Solana with sub-second settlement and MEV protection using Jito bundles.",
+    "result": "🥈 2nd Place — DeFi Infrastructure Track",
+    "awards": [
+      {
+        "place": "2nd",
+        "category": "DeFi Infrastructure",
+        "prize": "$5,000 SOL"
+      }
+    ],
+    "techStack": [
+      { "name": "Rust" },
+      { "name": "Anchor" },
+      { "name": "React" },
+      { "name": "TypeScript" },
+      { "name": "Jito" }
+    ],
+    "gallery": [],
+    "teamSize": 3,
+    "url": "https://encode.club"
+  },
+  {
+    "id": "hackathon-3",
+    "name": "Google AI Hackathon 2024",
+    "date": "2024-04-10",
+    "location": "Remote",
+    "description": "Created an AI-powered code review assistant using Gemini Pro, capable of detecting security vulnerabilities, performance bottlenecks, and suggesting idiomatic improvements.",
+    "result": "🏅 Top 10 Finalist — AI Tools Category",
+    "awards": [
+      {
+        "place": "Top 10",
+        "category": "AI Developer Tools",
+        "prize": "Google Cloud Credits"
+      }
+    ],
+    "techStack": [
+      { "name": "Python" },
+      { "name": "Gemini Pro" },
+      { "name": "FastAPI" },
+      { "name": "Next.js" },
+      { "name": "LangChain" }
+    ],
+    "gallery": [],
+    "teamSize": 2,
+    "url": "https://ai.google"
+  }
+]
