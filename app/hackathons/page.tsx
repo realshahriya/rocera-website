@@ -1,4 +1,4 @@
-import hackathons from '@/content/hackathons.json'
+import { getDedicatedHackathons } from '@/lib/hackathons'
 import { Trophy, MapPin, Users, Calendar } from 'lucide-react'
 import type { Metadata } from 'next'
 
@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     "Rocera's hackathon history — awards, tech stacks, and results from top global competitions.",
 }
 
-export default function HackathonsPage() {
+export default async function HackathonsPage() {
+  const hackathons = await getDedicatedHackathons()
+
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6" style={{ background: 'var(--color-rocera-bg)' }}>
       <div className="container-rocera">
@@ -66,14 +68,16 @@ export default function HackathonsPage() {
                       <span className="flex items-center gap-1">
                         <MapPin size={13} /> {h.location}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Users size={13} /> {h.teamSize}-person team
-                      </span>
+                      {h.teamSize && (
+                        <span className="flex items-center gap-1">
+                          <Users size={13} /> {h.teamSize}-person team
+                        </span>
+                      )}
                     </div>
                   </div>
 
                   {/* Trophy Badges */}
-                  {h.awards.length > 0 && (
+                  {h.awards && h.awards.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
                       {h.awards.map((award) => (
                         <div
@@ -101,27 +105,29 @@ export default function HackathonsPage() {
                   </p>
 
                   {/* Tech Stack Used */}
-                  <div>
-                    <p
-                      className="text-[10px] sm:text-xs uppercase tracking-widest font-mono font-semibold mb-2 text-gray-400"
-                    >
-                      STACK BUILT
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {h.techStack.map((t) => (
-                        <span
-                          key={t.name}
-                          className="px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-mono"
-                          style={{
-                            background: 'var(--color-rocera-surface-2)',
-                            color: 'var(--color-rocera-muted-2)',
-                          }}
-                        >
-                          {t.name}
-                        </span>
-                      ))}
+                  {h.techStack && h.techStack.length > 0 && (
+                    <div>
+                      <p
+                        className="text-[10px] sm:text-xs uppercase tracking-widest font-mono font-semibold mb-2 text-gray-400"
+                      >
+                        STACK BUILT
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {h.techStack.map((t) => (
+                          <span
+                            key={t.name}
+                            className="px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-mono"
+                            style={{
+                              background: 'var(--color-rocera-surface-2)',
+                              color: 'var(--color-rocera-muted-2)',
+                            }}
+                          >
+                            {t.name}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </article>
             ))}

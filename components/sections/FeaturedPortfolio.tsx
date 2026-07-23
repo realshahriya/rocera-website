@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { ExternalLink, GitBranch, ArrowRight, Star } from 'lucide-react'
 import type { Project } from '@/types/portfolio'
@@ -11,21 +12,24 @@ const statusColors = {
 }
 
 export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
+  const [imgError, setImgError] = useState(false)
+
   if (!projects || projects.length === 0) return null
 
   const spotlight = projects[0]
   const second = projects[1]
   const third = projects[2]
+  const isSingle = projects.length === 1
 
   return (
     <section
       id="featured-portfolio"
-      className="section-padding relative overflow-hidden"
+      className="section-padding relative overflow-hidden px-4 sm:px-6"
       style={{ background: 'var(--color-rocera-surface)' }}
     >
       <div className="container-rocera relative z-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             <p
               className="text-xs font-semibold uppercase tracking-widest mb-3"
@@ -34,7 +38,7 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
               Our Engineering Portfolio
             </p>
             <h2
-              className="text-3xl md:text-5xl font-extrabold tracking-tight"
+              className="text-3xl sm:text-5xl font-extrabold tracking-tight"
               style={{ color: 'var(--color-rocera-text)' }}
             >
               Featured Projects
@@ -52,20 +56,21 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
 
         {/* Bento Box Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Bento Card 1 — Large Featured Spotlight Project (Spans 2 Columns) */}
+          {/* Bento Card 1 — Featured Spotlight Project */}
           {spotlight && (
             <article
-              className="group relative rounded-3xl p-8 sm:p-10 overflow-hidden flex flex-col justify-between lg:col-span-2 transition-all duration-500 hover:scale-[1.01]"
+              className={`group relative rounded-3xl p-6 sm:p-8 lg:p-10 overflow-hidden flex flex-col justify-between transition-all duration-500 hover:scale-[1.01] ${
+                isSingle ? 'lg:col-span-3' : 'lg:col-span-2'
+              }`}
               style={{
                 background: 'linear-gradient(135deg, var(--color-rocera-bg) 0%, var(--color-rocera-surface-2) 100%)',
                 border: '1px solid var(--color-rocera-border-2)',
               }}
             >
               <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] pointer-events-none opacity-20 bg-indigo-500" />
-              <div className="absolute inset-0 grid-pattern opacity-10 pointer-events-none" />
 
-              <div>
-                <div className="flex items-center justify-between gap-4 mb-6">
+              <div className="relative z-10">
+                <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
                   <span
                     className="px-3 py-1 rounded-full text-xs font-mono font-medium"
                     style={{
@@ -84,28 +89,43 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
                   )}
                 </div>
 
-                <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 group-hover:text-amber-300 transition-colors" style={{ color: 'var(--color-rocera-text)' }}>
-                  {spotlight.title}
-                </h3>
-                <p className="text-sm sm:text-base leading-relaxed max-w-2xl mb-8" style={{ color: 'var(--color-rocera-muted-2)' }}>
-                  {spotlight.description}
-                </p>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  <div className={spotlight.image && !imgError ? 'lg:col-span-7' : 'lg:col-span-12'}>
+                    <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 group-hover:text-amber-300 transition-colors" style={{ color: 'var(--color-rocera-text)' }}>
+                      {spotlight.title}
+                    </h3>
+                    <p className="text-xs sm:text-base leading-relaxed mb-6 sm:mb-8" style={{ color: 'var(--color-rocera-muted-2)' }}>
+                      {spotlight.description}
+                    </p>
+                  </div>
+
+                  {spotlight.image && !imgError && (
+                    <div className="lg:col-span-5 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                      <img
+                        src={spotlight.image}
+                        alt={spotlight.title}
+                        onError={() => setImgError(true)}
+                        className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div>
-                <div className="flex flex-wrap gap-2 mb-8">
+              <div className="relative z-10 mt-6 sm:mt-8">
+                <div className="flex flex-wrap gap-2 mb-6 sm:mb-8">
                   {spotlight.tags.map((tag) => (
                     <span
                       key={tag}
                       className="px-3 py-1 rounded-lg text-xs font-mono"
-                      style={{ background: 'var(--color-rocera-surface-2)', color: 'var(--color-rocera-muted-2)' }}
+                      style={{ background: 'var(--color-rocera-surface)', color: 'var(--color-rocera-muted-2)' }}
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-white/10">
                   <Link
                     href={`/portfolio/${spotlight.slug}`}
                     className="btn-butter text-xs !py-2.5 !px-5"
@@ -131,7 +151,7 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
           {/* Bento Card 2 — Vertical Highlight Card */}
           {second && (
             <article
-              className="group relative rounded-3xl p-8 overflow-hidden flex flex-col justify-between transition-all duration-500 hover:scale-[1.01]"
+              className="group relative rounded-3xl p-6 sm:p-8 overflow-hidden flex flex-col justify-between transition-all duration-500 hover:scale-[1.01]"
               style={{
                 background: 'var(--color-rocera-bg)',
                 border: '1px solid var(--color-rocera-border)',
@@ -159,7 +179,7 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
                 <h3 className="text-xl font-bold mb-3 group-hover:text-amber-300 transition-colors" style={{ color: 'var(--color-rocera-text)' }}>
                   {second.title}
                 </h3>
-                <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-rocera-muted)' }}>
+                <p className="text-xs sm:text-sm leading-relaxed mb-6" style={{ color: 'var(--color-rocera-muted)' }}>
                   {second.description}
                 </p>
               </div>
@@ -194,10 +214,10 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
             </article>
           )}
 
-          {/* Bento Card 3 — Wide Project Banner Card (Spans 3 Columns on lg) */}
+          {/* Bento Card 3 — Wide Project Banner Card */}
           {third && (
             <article
-              className="group relative rounded-3xl p-8 sm:p-10 overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 lg:col-span-3 transition-all duration-500 hover:scale-[1.01]"
+              className="group relative rounded-3xl p-6 sm:p-8 lg:p-10 overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 lg:col-span-3 transition-all duration-500 hover:scale-[1.01]"
               style={{
                 background: 'linear-gradient(135deg, var(--color-rocera-surface-2) 0%, var(--color-rocera-bg) 100%)',
                 border: '1px solid var(--color-rocera-border-2)',
@@ -216,10 +236,10 @@ export function FeaturedPortfolio({ projects }: { projects: Project[] }) {
                   </span>
                   <span className="text-xs font-mono text-gray-500">{new Date(third.date).getFullYear()}</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-2 group-hover:text-amber-300 transition-colors" style={{ color: 'var(--color-rocera-text)' }}>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2 group-hover:text-amber-300 transition-colors" style={{ color: 'var(--color-rocera-text)' }}>
                   {third.title}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--color-rocera-muted-2)' }}>
+                <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--color-rocera-muted-2)' }}>
                   {third.description}
                 </p>
               </div>

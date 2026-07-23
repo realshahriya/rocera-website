@@ -33,7 +33,7 @@ function getLocalProject(slug: string): Project | null {
 }
 
 /**
- * Reads all local project Markdown files
+ * Reads all local project Markdown files if present
  */
 function getAllLocalProjects(): Project[] {
   if (!fs.existsSync(PORTFOLIO_DIR)) return []
@@ -55,8 +55,8 @@ function getAllLocalProjects(): Project[] {
 }
 
 /**
- * Retrieves all projects EXCLUSIVELY from the dedicated content repository (realshahriya/rocera-projects)
- * Each project folder contains meta.json, image.png, and optional case study text or README.md
+ * Retrieves projects EXCLUSIVELY from the dedicated content repository (realshahriya/rocera-projects).
+ * Each project is represented as a directory inside realshahriya/rocera-projects/projects/<slug>/ containing meta.json and image.png.
  */
 export async function getAllProjects(): Promise<Project[]> {
   const dedicatedDirs = await getDedicatedProjectDirs()
@@ -73,18 +73,18 @@ export async function getAllProjects(): Promise<Project[]> {
         description: meta.description || 'Rocera engineering project.',
         image:
           meta.image ||
-          `https://raw.githubusercontent.com/${GITHUB_PROJECTS_REPO}/main/${slug}/image.png`,
+          `https://raw.githubusercontent.com/${GITHUB_PROJECTS_REPO}/main/projects/${slug}/image.png`,
         tags: meta.tags || ['Engineering', 'Software'],
         status: meta.status || 'completed',
         demo: meta.demo,
-        github: meta.github || `https://github.com/${GITHUB_PROJECTS_REPO}/tree/main/${slug}`,
+        github: meta.github || `https://github.com/${GITHUB_PROJECTS_REPO}/tree/main/projects/${slug}`,
         date: meta.date || new Date().toISOString().split('T')[0],
         featured: meta.featured ?? true,
       })
     }
   }
 
-  // Merge local markdown seed files if any exist and aren't already included
+  // If local files exist and haven't been added from remote, append them
   const localProjects = getAllLocalProjects()
   for (const local of localProjects) {
     if (!seenSlugs.has(local.slug.toLowerCase())) {
